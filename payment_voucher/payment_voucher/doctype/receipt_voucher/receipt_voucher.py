@@ -99,7 +99,7 @@ class ReceiptVoucher(Document):
                 else:
                     if len(self.items) < 1:
                         frappe.throw("No detailed rows found")
-                    if self.crv_status > 0:
+                    if self.rv_status > 0:
                         frappe.throw("Journal entry already created")
         else:
             frappe.throw("Account type not found")
