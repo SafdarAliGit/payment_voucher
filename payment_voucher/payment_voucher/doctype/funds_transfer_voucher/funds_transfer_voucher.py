@@ -61,7 +61,7 @@ class FundsTransferVoucher(Document):
                 cheque_no = crv_no
                 cheque_date = posting_date
                 total = self.total
-                if len(self.items) > 0 and int(self.pv_status) < 1 and not je_present:
+                if len(self.items) > 0 and int(self.ft_status) < 1 and not je_present:
                     je = frappe.new_doc("Journal Entry")
                     je.posting_date = posting_date
                     je.voucher_type = voucher_type
