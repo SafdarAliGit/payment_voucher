@@ -24,9 +24,8 @@ frappe.ui.form.on('Payment Voucher', {
             var d = locals[cdt][cdn];
             return {
                 filters: [
-                    ["Account", "account_type", "in", ["Cash", "Bank"]],
-                    ["is_group", "=", 0],
-                    ["company", "=", frm.doc.company]
+                    ["Account", "company", "=", frm.doc.company]
+
                 ]
             };
         });

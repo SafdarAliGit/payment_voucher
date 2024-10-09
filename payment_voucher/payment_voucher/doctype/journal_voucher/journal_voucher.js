@@ -15,8 +15,7 @@ frappe.ui.form.on('Journal Voucher', {
             var d = locals[cdt][cdn];
             return {
                 filters: [
-                    ["Account", "is_group", "=", 0],
-                    ["company", "=", frm.doc.company]
+                    ["Account", "company", "=", frm.doc.company]
                 ]
             };
         });
