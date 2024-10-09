@@ -18,7 +18,8 @@ class FundsTransferVoucher(Document):
         if account_type:
             if account_type == "Cash":
                 je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
-                company = frappe.defaults.get_defaults().company
+                company = self.company
+                cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 cash_account = self.account
                 posting_date = self.posting_date
                 voucher_type = "Cash Entry"
@@ -35,7 +36,8 @@ class FundsTransferVoucher(Document):
                             'account': item.account,
                             'user_remark': item.description,
                             'debit_in_account_currency': item.amount,
-                            'credit_in_account_currency': 0
+                            'credit_in_account_currency': 0,
+                            'cost_center': cost_center
 
                         })
                         je.append("accounts", {
@@ -43,6 +45,7 @@ class FundsTransferVoucher(Document):
                             'debit_in_account_currency': 0,
                             'user_remark': f"{item.description if item.description else ''}",
                             'credit_in_account_currency': item.amount,
+                            'cost_center': cost_center
                         })
                     je.submit()
                     frappe.db.set_value('Funds Transfer Voucher', self.name, 'ft_status', 1)
@@ -53,7 +56,8 @@ class FundsTransferVoucher(Document):
                         frappe.throw("Journal entry already created")
             elif account_type == "Bank":
                 je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
-                company = frappe.defaults.get_defaults().company
+                company = self.company
+                cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 bank_account = self.account
                 posting_date = self.posting_date
                 voucher_type = "Bank Entry"
@@ -74,7 +78,8 @@ class FundsTransferVoucher(Document):
                             'account': item.account,
                             'user_remark': f"{item.description}, Ref:{item.ref_no}",
                             'debit_in_account_currency': item.amount,
-                            'credit_in_account_currency': 0
+                            'credit_in_account_currency': 0,
+                            'cost_center': cost_center
 
                         })
                         je.append("accounts", {
@@ -82,6 +87,7 @@ class FundsTransferVoucher(Document):
                             'debit_in_account_currency': 0,
                             'user_remark': f"{item.description}, Ref:{item.ref_no}",
                             'credit_in_account_currency': item.amount,
+                            'cost_center': cost_center
                         })
                     je.submit()
                     frappe.db.set_value('Funds Transfer Voucher', self.name, 'ft_status', 1)

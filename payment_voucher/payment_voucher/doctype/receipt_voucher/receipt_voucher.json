@@ -3,15 +3,14 @@
  "allow_rename": 1,
  "autoname": "format:RV-{YY}-{#####}",
  "creation": "2024-05-21 13:46:11.418244",
- "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "company",
   "account",
   "column_break_ajsff",
   "posting_date",
-  "column_break_5ozxf",
   "balance",
   "section_break_pvld6",
   "items",
@@ -77,12 +76,16 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_5ozxf",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "section_break_pvld6",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -93,7 +96,7 @@
    "link_fieldname": "bill_no"
   }
  ],
- "modified": "2024-05-21 14:16:54.892719",
+ "modified": "2024-10-09 17:54:36.455045",
  "modified_by": "Administrator",
  "module": "Payment Voucher",
  "name": "Receipt Voucher",

@@ -9,7 +9,8 @@ frappe.ui.form.on('Funds Transfer Voucher', {
             return {
                 filters: [
                     ["Account", "account_type", "in", ["Cash", "Bank"]],
-                    ["is_group", "=", 0]
+                    ["is_group", "=", 0],
+                    ["company", "=", frm.doc.company]
                 ]
             };
         });
@@ -18,7 +19,8 @@ frappe.ui.form.on('Funds Transfer Voucher', {
             return {
                 filters: [
                     ["Account", "account_type", "in", ["Cash", "Bank"]],
-                    ["is_group", "=", 0]
+                    ["is_group", "=", 0],
+                    ["company", "=", frm.doc.company]
                 ]
             };
         });

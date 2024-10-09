@@ -1,8 +1,8 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:FT-{YY}-{#####}",
- "creation": "2024-05-21 13:59:17.693809",
+ "autoname": "format:JV-{YY}-{#####}",
+ "creation": "2024-05-21 14:02:42.339901",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -15,10 +15,18 @@
   "section_break_rneld",
   "items",
   "total",
-  "ft_status",
+  "jv_status",
   "amended_from"
  ],
  "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
   {
    "fieldname": "account",
    "fieldtype": "Link",
@@ -53,7 +61,7 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Details",
-   "options": "Funds Transfer Voucher Items"
+   "options": "Payment Voucher Items"
   },
   {
    "default": "0",
@@ -64,26 +72,18 @@
   },
   {
    "default": "0",
-   "fieldname": "ft_status",
+   "fieldname": "jv_status",
    "fieldtype": "Select",
    "hidden": 1,
-   "label": "FT Status",
+   "label": "JV Status",
    "options": "0\n1\n2"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "remember_last_selected_value": 1,
-   "reqd": 1
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Funds Transfer Voucher",
+   "options": "Journal Voucher",
    "print_hide": 1,
    "read_only": 1
   }
@@ -96,10 +96,10 @@
    "link_fieldname": "bill_no"
   }
  ],
- "modified": "2024-10-09 17:49:09.531716",
+ "modified": "2024-10-09 17:51:35.778428",
  "modified_by": "Administrator",
  "module": "Payment Voucher",
- "name": "Funds Transfer Voucher",
+ "name": "Journal Voucher",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

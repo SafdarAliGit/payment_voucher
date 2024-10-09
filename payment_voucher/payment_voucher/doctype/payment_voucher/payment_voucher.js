@@ -14,8 +14,19 @@ frappe.ui.form.on('Payment Voucher', {
         frm.set_query("account", function () {
             return {
                 filters: [
-                    ["Account", "account_type", "in", ["Cash","Bank"]],
-                     ["is_group", "=", 0]
+                    ["Account", "account_type", "in", ["Cash", "Bank"]],
+                    ["is_group", "=", 0],
+                    ["company", "=", frm.doc.company]
+                ]
+            };
+        });
+        frm.set_query('account', 'items', function (doc, cdt, cdn) {
+            var d = locals[cdt][cdn];
+            return {
+                filters: [
+                    ["Account", "account_type", "in", ["Cash", "Bank"]],
+                    ["is_group", "=", 0],
+                    ["company", "=", frm.doc.company]
                 ]
             };
         });
