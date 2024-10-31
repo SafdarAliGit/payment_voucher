@@ -15,11 +15,11 @@ class PaymentVoucher(Document):
         else:
             return None
 
-    def before_submit(self):
+    def on_submit(self):
         account_type = self.account_type()
         if account_type:
             if account_type == "Cash":
-                je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+                # je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
                 company = self.company
                 cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 cash_account = self.account
@@ -27,13 +27,14 @@ class PaymentVoucher(Document):
                 voucher_type = "Cash Entry"
                 crv_no = self.name
                 total = self.total
-                if len(self.items) > 0 and int(self.pv_status) < 1 and not je_present:
-                    je = frappe.new_doc("Journal Entry")
-                    je.posting_date = posting_date
-                    je.voucher_type = voucher_type
-                    je.company = company
-                    je.bill_no = crv_no
+                if len(self.items) > 0 and int(self.pv_status) < 1:
                     for item in self.items:
+                        je = frappe.new_doc("Journal Entry")
+                        je.posting_date = posting_date
+                        je.voucher_type = voucher_type
+                        je.company = company
+                        je.bill_no = crv_no
+
                         je.append("accounts", {
                             'account': item.account,
                             'party_type': item.party_type,
@@ -52,15 +53,15 @@ class PaymentVoucher(Document):
                             'cost_center': cost_center
 
                         })
-                    je.submit()
-                    frappe.db.set_value('Payment Voucher', self.name, 'pv_status', 1)
+                        je.submit()
+                        frappe.db.set_value('Payment Voucher', self.name, 'pv_status', 1)
                 else:
                     if len(self.items) < 1:
                         frappe.throw("No detailed rows found")
                     if self.crv_status > 0:
                         frappe.throw("Journal entry already created")
             elif account_type == "Bank":
-                je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+                # je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
                 company = self.company
                 cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 bank_account = self.account
@@ -70,15 +71,15 @@ class PaymentVoucher(Document):
                 cheque_no = crv_no
                 cheque_date = posting_date
                 total = self.total
-                if len(self.items) > 0 and int(self.pv_status) < 1 and not je_present:
-                    je = frappe.new_doc("Journal Entry")
-                    je.posting_date = posting_date
-                    je.voucher_type = voucher_type
-                    je.company = company
-                    je.bill_no = crv_no
-                    je.cheque_no = cheque_no,
-                    je.cheque_date = cheque_date,
+                if len(self.items) > 0 and int(self.pv_status) < 1:
                     for item in self.items:
+                        je = frappe.new_doc("Journal Entry")
+                        je.posting_date = posting_date
+                        je.voucher_type = voucher_type
+                        je.company = company
+                        je.bill_no = crv_no
+                        je.cheque_no = cheque_no,
+                        je.cheque_date = cheque_date,
                         je.append("accounts", {
                             'account': item.account,
                             'party_type': item.party_type,
@@ -97,8 +98,8 @@ class PaymentVoucher(Document):
                             'cost_center': cost_center
 
                         })
-                    je.submit()
-                    frappe.db.set_value('Payment Voucher', self.name, 'pv_status', 1)
+                        je.submit()
+                        frappe.db.set_value('Payment Voucher', self.name, 'pv_status', 1)
                 else:
                     if len(self.items) < 1:
                         frappe.throw("No detailed rows found")

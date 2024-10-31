@@ -13,11 +13,11 @@ class FundsTransferVoucher(Document):
         else:
             return None
 
-    def before_submit(self):
+    def on_submit(self):
         account_type = self.account_type()
         if account_type:
             if account_type == "Cash":
-                je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+                # je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
                 company = self.company
                 cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 cash_account = self.account
@@ -25,7 +25,7 @@ class FundsTransferVoucher(Document):
                 voucher_type = "Cash Entry"
                 crv_no = self.name
                 total = self.total
-                if len(self.items) > 0 and int(self.ft_status) < 1 and not je_present:
+                if len(self.items) > 0 and int(self.ft_status) < 1:
                     je = frappe.new_doc("Journal Entry")
                     je.posting_date = posting_date
                     je.voucher_type = voucher_type
@@ -55,7 +55,7 @@ class FundsTransferVoucher(Document):
                     if self.ft_status > 0:
                         frappe.throw("Journal entry already created")
             elif account_type == "Bank":
-                je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+                # je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
                 company = self.company
                 cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 bank_account = self.account
@@ -65,7 +65,7 @@ class FundsTransferVoucher(Document):
                 cheque_no = crv_no
                 cheque_date = posting_date
                 total = self.total
-                if len(self.items) > 0 and int(self.ft_status) < 1 and not je_present:
+                if len(self.items) > 0 and int(self.ft_status) < 1:
                     je = frappe.new_doc("Journal Entry")
                     je.posting_date = posting_date
                     je.voucher_type = voucher_type
