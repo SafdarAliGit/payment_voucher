@@ -93,10 +93,10 @@
  "links": [
   {
    "link_doctype": "Journal Entry",
-   "link_fieldname": "bill_no"
+   "link_fieldname": "slip_no"
   }
  ],
- "modified": "2024-10-09 17:54:36.455045",
+ "modified": "2024-11-05 20:57:42.273076",
  "modified_by": "Administrator",
  "module": "Payment Voucher",
  "name": "Receipt Voucher",

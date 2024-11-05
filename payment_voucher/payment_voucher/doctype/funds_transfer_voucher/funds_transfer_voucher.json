@@ -93,10 +93,10 @@
  "links": [
   {
    "link_doctype": "Journal Entry",
-   "link_fieldname": "bill_no"
+   "link_fieldname": "slip_no"
   }
  ],
- "modified": "2024-10-09 17:49:09.531716",
+ "modified": "2024-11-05 20:55:46.387403",
  "modified_by": "Administrator",
  "module": "Payment Voucher",
  "name": "Funds Transfer Voucher",
