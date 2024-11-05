@@ -17,7 +17,7 @@ class FundsTransferVoucher(Document):
         account_type = self.account_type()
         if account_type:
             if account_type == "Cash":
-                # je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+                je_present = get_doctype_by_field('Journal Entry', 'slip_no', self.name)
                 company = self.company
                 cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 cash_account = self.account
@@ -25,12 +25,12 @@ class FundsTransferVoucher(Document):
                 voucher_type = "Cash Entry"
                 crv_no = self.name
                 total = self.total
-                if len(self.items) > 0 and int(self.ft_status) < 1:
+                if len(self.items) > 0 and int(self.ft_status) < 1 and not je_present:
                     je = frappe.new_doc("Journal Entry")
                     je.posting_date = posting_date
                     je.voucher_type = voucher_type
                     je.company = company
-                    je.bill_no = crv_no
+                    je.slip_no = crv_no
                     for item in self.items:
                         je.append("accounts", {
                             'account': item.account,
@@ -55,7 +55,7 @@ class FundsTransferVoucher(Document):
                     if self.ft_status > 0:
                         frappe.throw("Journal entry already created")
             elif account_type == "Bank":
-                # je_present = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+                je_present = get_doctype_by_field('Journal Entry', 'slip_no', self.name)
                 company = self.company
                 cost_center = frappe.get_cached_value("Company", company, "cost_center")
                 bank_account = self.account
@@ -65,12 +65,12 @@ class FundsTransferVoucher(Document):
                 cheque_no = crv_no
                 cheque_date = posting_date
                 total = self.total
-                if len(self.items) > 0 and int(self.ft_status) < 1:
+                if len(self.items) > 0 and int(self.ft_status) < 1 and not je_present:
                     je = frappe.new_doc("Journal Entry")
                     je.posting_date = posting_date
                     je.voucher_type = voucher_type
                     je.company = company
-                    je.bill_no = crv_no
+                    je.slip_no = crv_no
                     je.cheque_no = cheque_no,
                     je.cheque_date = cheque_date,
                     for item in self.items:
@@ -100,7 +100,7 @@ class FundsTransferVoucher(Document):
             frappe.throw("Account type not found")
 
     def on_cancel(self):
-        current_je = get_doctype_by_field('Journal Entry', 'bill_no', self.name)
+        current_je = get_doctype_by_field('Journal Entry', 'slip_no', self.name)
         if current_je.docstatus != 2:  # Ensure the document is in the "Submitted" state
             current_je.cancel()
             frappe.db.commit()

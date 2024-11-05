@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:PV-{YY}-{#####}",
+ "autoname": "format:PV-{DD}-{#####}",
  "creation": "2024-05-21 13:49:07.825224",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -96,7 +96,7 @@
    "link_fieldname": "bill_no"
   }
  ],
- "modified": "2024-10-09 17:52:52.126668",
+ "modified": "2024-11-05 20:11:08.464817",
  "modified_by": "Administrator",
  "module": "Payment Voucher",
  "name": "Payment Voucher",
