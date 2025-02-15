@@ -42,6 +42,12 @@ frappe.ui.form.on('Payment Voucher', {
                 }
             }
         });
+    },
+    custom_master_towel_costing: function(frm) {
+        $.each(frm.doc.items || [], function(i, row) {
+            frappe.model.set_value(row.doctype, row.name, 'custom_master_towel_costing', frm.doc.custom_master_towel_costing);
+        });
+        frm.refresh_field('items');
     }
 });
 
